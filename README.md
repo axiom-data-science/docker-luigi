@@ -69,3 +69,5 @@ between restarts
 Mount a volume at `/luigi/logs` for access to the `luigid` and `luigi` logs
 
 `docker run -v /your/logs/directory:/luigi/logs --name luigi axiom/luigi`
+
+![Luigi death stare](luigi.jpg)
