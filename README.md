@@ -15,8 +15,9 @@ Mount a directory containing a `luigi.conf` and `logging.conf` file(s) to
 
 ### Defaults
 
-```bash
+```
 # luigi.conf
+
 [scheduler]
 record_task_history: True
 state-path: /luigi/state/luigi-state.pickle
@@ -25,8 +26,9 @@ state-path: /luigi/state/luigi-state.pickle
 db_connection: sqlite:////luigi/state/luigi-task-history.db
 ```
 
-```bash
+```
 # logging.conf
+
 [loggers]
 keys=root
 
