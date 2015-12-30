@@ -1,12 +1,13 @@
-FROM debian:jessie
+FROM phusion/baseimage:0.9.18
+# Use baseimage-docker's init system
+CMD ["/sbin/my_init"]
 
 MAINTAINER Kyle Wilcox <kyle@axiomdatascience.com>
-
-RUN apt-get update
-RUN apt-get upgrade -y
+ENV DEBIAN_FRONTEND noninteractive
+ENV LANG C.UTF-8
 
 # Setup CONDA (https://hub.docker.com/r/continuumio/miniconda3/~/dockerfile/)
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
     git \
     wget \
     bzip2 \
@@ -16,16 +17,19 @@ RUN apt-get install -y \
     libsm6 \
     libxrender1 \
     pwgen \
-    binutils
+    binutils \
+&& apt-get clean \
+&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+ENV MINICONDA_VERSION 3.16.0
+ENV CONDA_VERSION 3.19.0
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-3.10.1-Linux-x86_64.sh && \
-    /bin/bash /Miniconda3-3.10.1-Linux-x86_64.sh -b -p /opt/conda && \
-    rm Miniconda3-3.10.1-Linux-x86_64.sh && \
-    /opt/conda/bin/conda install --yes conda
-
+    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh && \
+    /bin/bash /Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh -b -p /opt/conda && \
+    rm Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh && \
+    /opt/conda/bin/conda install --yes conda==$CONDA_VERSION
 ENV PATH /opt/conda/bin:$PATH
-ENV DEBIAN_FRONTEND noninteractive
+
 ENV LUIGI_CONFIG_PATH /etc/luigi/luigi.conf
 
 # Install requirements
@@ -46,4 +50,5 @@ VOLUME /luigi/state
 
 EXPOSE 8082
 
-ENTRYPOINT ["luigid", "--logdir", "/luigi/logs"]
+RUN mkdir /etc/service/luigid
+COPY luigid.sh /etc/service/luigid/run
