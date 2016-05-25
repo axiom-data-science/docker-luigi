@@ -34,6 +34,7 @@ ADD requirements.txt /tmp/
 RUN conda config --add channels conda-forge
 RUN conda install --file /tmp/requirements.txt
 
+ENV LUIGI_VERSION 2.1.1
 ENV LUIGI_CONFIG_DIR /etc/luigi/
 
 RUN mkdir -p $LUIGI_CONFIG_DIR
