@@ -43,18 +43,14 @@ keys=detail
 class=logging.Formatter
 format=%(asctime)s %(name)-15s %(levelname)-8s %(message)s
 
-[handler_file]
-class=handlers.TimedRotatingFileHandler
-args=('/luigi/logs/luigi.log', 'D', '7', 0, None, False, True)
-formatter=detail
-
 [handler_console]
 class=StreamHandler
+args=(sys.stdout,)
 formatter=detail
 
 [logger_root]
 level=INFO
-handlers=console, file
+handlers=console
 ```
 
 ## Persistent State
