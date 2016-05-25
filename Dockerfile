@@ -21,26 +21,26 @@ RUN apt-get update && apt-get install -y \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ENV MINICONDA_VERSION 3.16.0
-ENV CONDA_VERSION 3.19.0
+ENV MINICONDA_VERSION latest
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh && \
-    /bin/bash /Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh -b -p /opt/conda && \
-    rm Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh && \
-    /opt/conda/bin/conda install --yes conda==$CONDA_VERSION
+    wget --quiet -O /miniconda.sh http://repo.continuum.io/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh && \
+    /bin/bash /miniconda.sh -b -p /opt/conda && \
+    rm /miniconda.sh && \
+    /opt/conda/bin/conda update conda --yes
 ENV PATH /opt/conda/bin:$PATH
-
-ENV LUIGI_CONFIG_PATH /etc/luigi/luigi.conf
 
 # Install requirements
 ADD requirements.txt /tmp/
-RUN conda config --add channels ioos
+RUN conda config --add channels conda-forge
 RUN conda install --file /tmp/requirements.txt
 
-RUN mkdir /etc/luigi
-ADD logging.conf /etc/luigi/
-ADD luigi.conf /etc/luigi/
-VOLUME /etc/luigi
+ENV LUIGI_CONFIG_DIR /etc/luigi/
+
+RUN mkdir -p $LUIGI_CONFIG_DIR
+ADD logging.conf $LUIGI_CONFIG_DIR
+ADD luigi.conf $LUIGI_CONFIG_DIR
+ENV LUIGI_CONFIG_PATH /etc/luigi/luigi.conf
+VOLUME $LUIGI_CONFIG_DIR
 
 RUN mkdir -p /luigi/logs
 VOLUME /luigi/logs
