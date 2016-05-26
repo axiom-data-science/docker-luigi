@@ -12,12 +12,19 @@ logging configuration from `/etc/luigi/logging.conf`
 Mount a directory containing a `luigi.conf` and `logging.conf` file(s) to
 `/etc/luigi` to provide your own configuration(s).
 
-`docker run -v /your/directory:/etc/luigi --name luigi axiom/docker-luigi`
+```
+docker run -v /your/directory:/etc/luigi \
+           --name luigi \
+           axiom/docker-luigi
+```
 
 ### Defaults
 
 ```
 # luigi.conf
+
+[core]
+logging_conf_file: /etc/luigi/logging.conf
 
 [scheduler]
 record_task_history: True
@@ -34,7 +41,7 @@ db_connection: sqlite:////luigi/state/luigi-task-history.db
 keys=root
 
 [handlers]
-keys=console, file
+keys=console
 
 [formatters]
 keys=detail
@@ -58,12 +65,13 @@ handlers=console
 Mount a volume at `/luigi/state` for the `luigid` scheduler state to be persisted 
 between restarts
 
-`docker run -v /your/state/directory:/luigi/state --name luigi axiom/docker-luigi`
+```
+docker run -v /your/state/directory:/luigi/state \
+           --name luigi \
+           axiom/docker-luigi
+```
 
 
 ## Logs
 
-Mount a volume at `/luigi/logs` for file access to the `luigid` and `luigi` logs.
-The logs are also pushed through syslog.
-
-`docker run -v /your/logs/directory:/luigi/logs --name luigi axiom/docker-luigi`
+The logs are pushed through syslog and accessible though `docker logs` as you would expect.

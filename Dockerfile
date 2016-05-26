@@ -43,9 +43,6 @@ ADD luigi.conf $LUIGI_CONFIG_DIR
 ENV LUIGI_CONFIG_PATH /etc/luigi/luigi.conf
 VOLUME $LUIGI_CONFIG_DIR
 
-RUN mkdir -p /luigi/logs
-VOLUME /luigi/logs
-
 RUN mkdir -p /luigi/state
 VOLUME /luigi/state
 
