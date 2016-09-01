@@ -46,7 +46,7 @@ RUN conda install -y \
         && \
     conda clean -a -y
 
-ENV LUIGI_VERSION 2.1.1
+ENV LUIGI_VERSION 2.3.1
 ENV LUIGI_CONFIG_DIR /etc/luigi/
 
 RUN mkdir -p $LUIGI_CONFIG_DIR

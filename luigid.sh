@@ -10,4 +10,4 @@ __| |___) )  ) \__/ (    _| |__   \ \__/ /    _| |__
 EOF
 echo "Version: $LUIGI_VERSION"
 
-exec luigid | /usr/bin/logger -t luigid
+exec luigid
