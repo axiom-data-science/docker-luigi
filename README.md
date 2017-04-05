@@ -2,6 +2,11 @@
 
 ![Luigi death stare](luigi.jpg)
 
+## Versions
+
+* `axiom/docker-luigi:latest` (2.6.1)
+* `axiom/docker-luigi:2.6.1`
+* `axiom/docker-luigi:2.3.1`
 
 ## Exposed Volumes
 

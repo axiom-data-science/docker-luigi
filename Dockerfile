@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Setup CONDA (https://hub.docker.com/r/continuumio/miniconda3/~/dockerfile/)
-ENV MINICONDA_VERSION 4.1.11
+ENV MINICONDA_VERSION 4.2.12
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     curl -k -o /miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh && \
     /bin/bash /miniconda.sh -b -p /opt/conda && \
@@ -46,7 +46,7 @@ RUN conda install -y \
         && \
     conda clean -a -y
 
-ENV LUIGI_VERSION 2.3.1
+ENV LUIGI_VERSION 2.6.1
 ENV LUIGI_CONFIG_DIR /etc/luigi/
 
 RUN mkdir -p $LUIGI_CONFIG_DIR
