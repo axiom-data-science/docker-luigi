@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.19
+FROM phusion/baseimage:0.9.22
 # Use baseimage-docker's init system
 CMD ["/sbin/my_init", "--quiet"]
 
