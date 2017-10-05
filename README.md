@@ -4,7 +4,8 @@
 
 ## Versions
 
-* `axiom/docker-luigi:latest` (2.6.2)
+* `axiom/docker-luigi:latest` (2.7.0)
+* `axiom/docker-luigi:2.7.0`
 * `axiom/docker-luigi:2.6.2`
 * `axiom/docker-luigi:2.3.1`
 
