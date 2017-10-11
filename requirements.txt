@@ -1,2 +1,2 @@
-luigi==2.7.0
+luigi==2.7.1
 sqlalchemy

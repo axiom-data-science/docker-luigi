@@ -4,9 +4,11 @@
 
 ## Versions
 
-* `axiom/docker-luigi:latest` (2.7.0)
+* `axiom/docker-luigi:latest` (2.7.1)
+* `axiom/docker-luigi:2.7.1`
 * `axiom/docker-luigi:2.7.0`
 * `axiom/docker-luigi:2.6.2`
+* `axiom/docker-luigi:2.6.1`
 * `axiom/docker-luigi:2.3.1`
 
 ## Exposed Volumes
@@ -38,14 +40,13 @@ docker run \
 The default can be found in the `luigi.conf` and `logging.conf` files in this
 repository. Be aware that these specify the paths to the logging configration
 and the state persistence database. If you change these values in `luigi.conf`
-the exapmles in this document will not work!
-
+the examples in this document will not work!
 
 
 #### `/luigi/state`
 
 Mount a volume at `/luigi/state` for the `luigid` **state to be persisted**
-between restarts. Use named volumes for `#pro` status.
+between restarts. Example below uses a named docker volume to persist the state:
 
 ```
 docker run \
