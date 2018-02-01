@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.22
+FROM phusion/baseimage:0.10.0
 # Use baseimage-docker's init system
 CMD ["/sbin/my_init", "--quiet"]
 
@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
 
 # Setup CONDA (https://hub.docker.com/r/continuumio/miniconda3/~/dockerfile/)
 ENV MINICONDA_VERSION latest
-ENV PYTHON_VERSION 3.5
+ENV PYTHON_VERSION 3.6
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     curl -k -o /miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh && \
     /bin/bash /miniconda.sh -b -p /opt/conda && \
@@ -47,7 +47,7 @@ RUN conda install -y \
         && \
     conda clean -a -y
 
-ENV LUIGI_VERSION 2.7.1
+ENV LUIGI_VERSION 2.7.2
 ENV LUIGI_CONFIG_DIR /etc/luigi/
 
 RUN mkdir -p $LUIGI_CONFIG_DIR
