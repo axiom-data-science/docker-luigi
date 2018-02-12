@@ -1,10 +1,19 @@
-FROM phusion/baseimage:0.9.22
-# Use baseimage-docker's init system
+FROM phusion/baseimage:0.10.0
 CMD ["/sbin/my_init", "--quiet"]
 
-MAINTAINER Kyle Wilcox <kyle@axiomdatascience.com>
+MAINTAINER Kyle Wilcox <kyle@axds.com>
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG C.UTF-8
+
+ARG PYTHON_VERSION=3.6
+ENV PYTHON_VERSION ${PYTHON_VERSION}
+ARG LUIGI_VERSION=2.7.2
+ENV LUIGI_VERSION ${LUIGI_VERSION}
+ENV MINICONDA_VERSION latest
+ENV PATH /opt/conda/bin:$PATH
+ENV LUIGI_CONFIG_DIR /etc/luigi/
+ENV LUIGI_CONFIG_PATH /etc/luigi/luigi.conf
+ENV LUIGI_STATE_DIR /luigi/state
 
 RUN apt-get update && apt-get install -y \
         binutils \
@@ -18,13 +27,9 @@ RUN apt-get update && apt-get install -y \
         wget \
         && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Setup CONDA (https://hub.docker.com/r/continuumio/miniconda3/~/dockerfile/)
-ENV MINICONDA_VERSION latest
-ENV PYTHON_VERSION 3.5
-RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-    curl -k -o /miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-$MINICONDA_VERSION-Linux-x86_64.sh && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
+    curl -k -o /miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
     /bin/bash /miniconda.sh -b -p /opt/conda && \
     rm /miniconda.sh && \
     /opt/conda/bin/conda config \
@@ -35,31 +40,20 @@ RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     /opt/conda/bin/conda config \
         --add channels conda-forge \
         && \
-    /opt/conda/bin/conda install python=$PYTHON_VERSION && \
-    /opt/conda/bin/conda clean -a -y
-
-ENV PATH /opt/conda/bin:$PATH
-
-# Install requirements
-COPY requirements.txt /tmp/
-RUN conda install -y \
-        --file /tmp/requirements.txt \
+    /opt/conda/bin/conda install \
+        python==${PYTHON_VERSION} \
+        luigi==${LUIGI_VERSION} \
+        sqlalchemy \
         && \
-    conda clean -a -y
+    /opt/conda/bin/conda clean -a -y && \
+    mkdir -p ${LUIGI_CONFIG_DIR} && \
+    mkdir -p ${LUIGI_STATE_DIR}
 
-ENV LUIGI_VERSION 2.7.1
-ENV LUIGI_CONFIG_DIR /etc/luigi/
+COPY logging.conf ${LUIGI_CONFIG_DIR}
+COPY luigi.conf ${LUIGI_CONFIG_DIR}
+VOLUME [${LUIGI_CONFIG_DIR}, ${LUIGI_STATE_DIR}]
 
-RUN mkdir -p $LUIGI_CONFIG_DIR
-COPY logging.conf $LUIGI_CONFIG_DIR
-COPY luigi.conf $LUIGI_CONFIG_DIR
-ENV LUIGI_CONFIG_PATH /etc/luigi/luigi.conf
-VOLUME $LUIGI_CONFIG_DIR
-
-RUN mkdir -p /luigi/state
-VOLUME /luigi/state
-
-EXPOSE 8082
+EXPOSE 8082/TCP
 
 RUN mkdir /etc/service/luigid
 COPY luigid.sh /etc/service/luigid/run

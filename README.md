@@ -4,7 +4,19 @@
 
 ## Versions
 
-* `axiom/docker-luigi:latest` (2.7.1)
+### alpine
+
+Uses `pip` to install `luigi` and dependencies
+
+* `axiom/docker-luigi:latest-alpine` (2.7.2)
+* `axiom/docker-luigi:2.7.2-alpine`
+
+### baseimage (ubuntu xenial)
+
+Uses `conda` to install `luigi` and dependencies
+
+* `axiom/docker-luigi:latest` (2.7.2)
+* `axiom/docker-luigi:2.7.2`
 * `axiom/docker-luigi:2.7.1`
 * `axiom/docker-luigi:2.7.0`
 * `axiom/docker-luigi:2.6.2`
