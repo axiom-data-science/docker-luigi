@@ -18,9 +18,12 @@ RUN apk add --no-cache --virtual .build-deps \
       libc-dev \
       libffi-dev \
       mariadb-dev && \
+    apk add --no-cache --virtual \
+      postgresql-dev && \
     pip install \
       luigi==${LUIGI_VERSION} \
       sqlalchemy \
+      psycopg2 \
       mysqlclient && \
     apk add --virtual mariadb-client-libs && \
     apk del .build-deps && \
