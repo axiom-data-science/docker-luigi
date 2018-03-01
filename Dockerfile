@@ -44,6 +44,8 @@ RUN apt-get update && apt-get install -y \
         python==${PYTHON_VERSION} \
         luigi==${LUIGI_VERSION} \
         sqlalchemy \
+        psycopg2 \
+        mysql-connector-python \
         && \
     /opt/conda/bin/conda clean -a -y && \
     mkdir -p ${LUIGI_CONFIG_DIR} && \
