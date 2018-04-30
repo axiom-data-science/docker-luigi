@@ -53,7 +53,7 @@ RUN apt-get update && apt-get install -y \
 
 COPY logging.conf ${LUIGI_CONFIG_DIR}
 COPY luigi.conf ${LUIGI_CONFIG_DIR}
-VOLUME [${LUIGI_CONFIG_DIR}, ${LUIGI_STATE_DIR}]
+VOLUME ["${LUIGI_CONFIG_DIR}", "${LUIGI_STATE_DIR}"]
 
 EXPOSE 8082/TCP
 
