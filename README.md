@@ -8,7 +8,8 @@
 
 Uses `pip` to install `luigi` and dependencies
 
-* `axiom/docker-luigi:latest-alpine` (2.7.5)
+* `axiom/docker-luigi:latest-alpine` (2.7.6)
+* `axiom/docker-luigi:2.7.6-alpine`
 * `axiom/docker-luigi:2.7.5-alpine`
 * `axiom/docker-luigi:2.7.2-alpine`
 
@@ -16,7 +17,8 @@ Uses `pip` to install `luigi` and dependencies
 
 Uses `conda` to install `luigi` and dependencies
 
-* `axiom/docker-luigi:latest` (2.7.5)
+* `axiom/docker-luigi:latest` (2.7.6)
+* `axiom/docker-luigi:2.7.6`
 * `axiom/docker-luigi:2.7.5`
 * `axiom/docker-luigi:2.7.2`
 * `axiom/docker-luigi:2.7.1`
