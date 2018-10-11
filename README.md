@@ -10,7 +10,8 @@ In addition to suporting the `sqlite` task history backend, this container inclu
 
 Uses `pip` to install `luigi` and dependencies
 
-* `axiom/docker-luigi:latest-alpine` (2.7.8)
+* `axiom/docker-luigi:latest-alpine` (2.7.9)
+* `axiom/docker-luigi:2.7.9-alpine`
 * `axiom/docker-luigi:2.7.8-alpine`
 * `2.7.7` [was skipped](https://github.com/spotify/luigi/releases/tag/2.7.7)
 * `axiom/docker-luigi:2.7.6-alpine`
@@ -21,7 +22,8 @@ Uses `pip` to install `luigi` and dependencies
 
 Uses `conda` to install `luigi` and dependencies
 
-* `axiom/docker-luigi:latest` (2.7.8)
+* `axiom/docker-luigi:latest` (2.7.9)
+* `axiom/docker-luigi:2.7.9`
 * `axiom/docker-luigi:2.7.8`
 * `2.7.7` [was skipped](https://github.com/spotify/luigi/releases/tag/2.7.7)
 * `axiom/docker-luigi:2.7.6`
