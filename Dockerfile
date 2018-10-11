@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.10.0
+FROM phusion/baseimage:0.10.2
 CMD ["/sbin/my_init", "--quiet"]
 
 MAINTAINER Kyle Wilcox <kyle@axds.com>
@@ -7,7 +7,7 @@ ENV LANG C.UTF-8
 
 ARG PYTHON_VERSION=3.6
 ENV PYTHON_VERSION ${PYTHON_VERSION}
-ARG LUIGI_VERSION=2.7.6
+ARG LUIGI_VERSION=2.7.8
 ENV LUIGI_VERSION ${LUIGI_VERSION}
 ENV MINICONDA_VERSION latest
 ENV PATH /opt/conda/bin:$PATH
