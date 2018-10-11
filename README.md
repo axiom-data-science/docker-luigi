@@ -1,5 +1,7 @@
 # Luigi on Docker
 
+In addition to suporting the `sqlite` task history backend, this container includes all of the dependencies to use the `mysql` and `postgresql` backends.
+
 ![Luigi death stare](luigi.jpg)
 
 ## Versions
@@ -8,7 +10,9 @@
 
 Uses `pip` to install `luigi` and dependencies
 
-* `axiom/docker-luigi:latest-alpine` (2.7.6)
+* `axiom/docker-luigi:latest-alpine` (2.7.8)
+* `axiom/docker-luigi:2.7.8-alpine`
+* `2.7.7` [was skipped](https://github.com/spotify/luigi/releases/tag/2.7.7)
 * `axiom/docker-luigi:2.7.6-alpine`
 * `axiom/docker-luigi:2.7.5-alpine`
 * `axiom/docker-luigi:2.7.2-alpine`
@@ -17,7 +21,9 @@ Uses `pip` to install `luigi` and dependencies
 
 Uses `conda` to install `luigi` and dependencies
 
-* `axiom/docker-luigi:latest` (2.7.6)
+* `axiom/docker-luigi:latest` (2.7.8)
+* `axiom/docker-luigi:2.7.8`
+* `2.7.7` [was skipped](https://github.com/spotify/luigi/releases/tag/2.7.7)
 * `axiom/docker-luigi:2.7.6`
 * `axiom/docker-luigi:2.7.5`
 * `axiom/docker-luigi:2.7.2`
