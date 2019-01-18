@@ -6,38 +6,21 @@ In addition to supporting the `sqlite` task history backend, this container incl
 
 ## Versions
 
+[All available images](https://hub.docker.com/r/axiom/docker-luigi/tags)
+
 ### alpine
 
 Uses `pip` to install `luigi` and dependencies
 
 * `axiom/docker-luigi:latest-alpine` (2.8.2)
-* `2.8.0` and `2.8.1` was skipped
-* `axiom/docker-luigi:2.8.2-alpine`
-* `axiom/docker-luigi:2.7.9-alpine`
-* `axiom/docker-luigi:2.7.8-alpine`
-* `2.7.7` [was skipped](https://github.com/spotify/luigi/releases/tag/2.7.7)
-* `axiom/docker-luigi:2.7.6-alpine`
-* `axiom/docker-luigi:2.7.5-alpine`
-* `axiom/docker-luigi:2.7.2-alpine`
+* `axiom/docker-luigi:{version}-alpine`
 
 ### baseimage (ubuntu xenial)
 
 Uses `conda` to install `luigi` and dependencies
 
 * `axiom/docker-luigi:latest` (2.8.2)
-* `axiom/docker-luigi:2.8.2`
-* `2.8.0` and `2.8.1` was skipped
-* `axiom/docker-luigi:2.7.9`
-* `axiom/docker-luigi:2.7.8`
-* `2.7.7` [was skipped](https://github.com/spotify/luigi/releases/tag/2.7.7)
-* `axiom/docker-luigi:2.7.6`
-* `axiom/docker-luigi:2.7.5`
-* `axiom/docker-luigi:2.7.2`
-* `axiom/docker-luigi:2.7.1`
-* `axiom/docker-luigi:2.7.0`
-* `axiom/docker-luigi:2.6.2`
-* `axiom/docker-luigi:2.6.1`
-* `axiom/docker-luigi:2.3.1`
+* `axiom/docker-luigi:{version}`
 
 ## Exposed Volumes
 
