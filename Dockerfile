@@ -41,11 +41,12 @@ RUN apt-get update && apt-get install -y \
         --add channels conda-forge \
         && \
     /opt/conda/bin/conda install \
-        python==${PYTHON_VERSION} \
+        python=="${PYTHON_VERSION}*" \
         luigi==${LUIGI_VERSION} \
         sqlalchemy \
         psycopg2 \
         mysql-connector-python \
+        mysqlclient \
         && \
     /opt/conda/bin/conda clean -a -y && \
     mkdir -p ${LUIGI_CONFIG_DIR} && \

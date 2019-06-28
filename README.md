@@ -64,3 +64,14 @@ docker run \
     -v luigistate:/luigi/state \
     axiom/docker-luigi
 ```
+
+
+### Testing
+
+```bash
+docker-compose -f tests/docker-compose.yml up -d maria pgsql
+# Wait ~10s for databases to start, and in new terminal:
+docker-compose -f tests/docker-compose.yml build
+docker-compose -f tests/docker-compose.yml up
+docker-compose down
+```

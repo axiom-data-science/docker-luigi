@@ -1,0 +1,61 @@
+version: '3.2'
+
+services:
+
+  maria:
+    image: mariadb:latest
+    environment:
+      MYSQL_USER: luigid
+      MYSQL_PASSWORD: luigid
+      MYSQL_DATABASE: luigid
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+
+  pgsql:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: luigid
+      POSTGRES_PASS: luigid
+      POSTGRES_DB: luigid
+
+  luigi-alpine-sqlite:
+    build:
+      context: ../
+      dockerfile: Dockerfile.alpine
+
+  luigi-alpine-maria:
+    build:
+      context: ../
+      dockerfile: Dockerfile.alpine
+    volumes:
+      - "./maria.conf:/etc/luigi/luigi.conf:ro"
+    depends_on:
+      - maria
+
+  luigi-alpine-pgsql:
+    build:
+      context: ../
+      dockerfile: Dockerfile.alpine
+    volumes:
+      - "./pgsql.conf:/etc/luigi/luigi.conf:ro"
+    depends_on:
+      - pgsql
+
+  luigi-sqlite:
+    build:
+      context: ../
+
+  luigi-maria:
+    build:
+      context: ../
+    volumes:
+      - "./maria.conf:/etc/luigi/luigi.conf:ro"
+    depends_on:
+      - maria
+
+  luigi-pgsql:
+    build:
+      context: ../
+    volumes:
+      - "./pgsql.conf:/etc/luigi/luigi.conf:ro"
+    depends_on:
+      - pgsql

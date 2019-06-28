@@ -1,5 +1,5 @@
 ARG PYTHON_VERSION=3.7
-FROM python:$PYTHON_VERSION-alpine
+FROM python:$PYTHON_VERSION-alpine3.10
 
 MAINTAINER Kyle Wilcox <kyle@axds.com>
 MAINTAINER Sam Merry <sam@getpolymorph.com>
@@ -13,20 +13,29 @@ ENV LUIGI_STATE_DIR /luigi/state
 
 RUN apk add --no-cache --virtual .build-deps \
       build-base \
-      py-mysqldb \
       gcc \
+      musl-dev \
       libc-dev \
       libffi-dev \
-      mariadb-dev && \
-    apk add --no-cache --virtual \
-      postgresql-dev && \
-    pip install \
+      python3-dev \
+      py-mysqldb \
+      postgresql-dev \
+      mariadb-dev \
+      mariadb-connector-c-dev \
+      && \
+    python3 -m pip install \
       luigi==${LUIGI_VERSION} \
       sqlalchemy \
       psycopg2 \
-      mysqlclient && \
-    apk add --virtual mariadb-client-libs && \
-    apk del .build-deps && \
+      mysql-connector-python \
+      mysqlclient \
+      && \
+    apk add --virtual \
+      mariadb-client-libs \
+      mariadb-connector-c \
+      postgresql-libs \
+      && \
+    apk --purge del .build-deps && \
     mkdir -p ${LUIGI_CONFIG_DIR} && \
     mkdir -p ${LUIGI_STATE_DIR}
 
