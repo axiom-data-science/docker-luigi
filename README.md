@@ -12,14 +12,14 @@ In addition to supporting the `sqlite` task history backend, this container incl
 
 Uses `pip` to install `luigi` and dependencies
 
-* `axiom/docker-luigi:latest-alpine` (2.8.7)
+* `axiom/docker-luigi:latest-alpine` (2.8.9)
 * `axiom/docker-luigi:{version}-alpine`
 
 ### baseimage (ubuntu xenial)
 
 Uses `conda` to install `luigi` and dependencies
 
-* `axiom/docker-luigi:latest` (2.8.7)
+* `axiom/docker-luigi:latest` (2.8.9)
 * `axiom/docker-luigi:{version}`
 
 ## Exposed Volumes
