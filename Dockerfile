@@ -47,6 +47,7 @@ RUN apt-get update && apt-get install -y \
         psycopg2 \
         mysql-connector-python \
         mysqlclient \
+        prometheus_client \
         && \
     /opt/conda/bin/conda clean -a -y && \
     mkdir -p ${LUIGI_CONFIG_DIR} && \

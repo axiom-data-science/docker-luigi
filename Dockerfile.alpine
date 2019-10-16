@@ -29,6 +29,7 @@ RUN apk add --no-cache --virtual .build-deps \
       psycopg2 \
       mysql-connector-python \
       mysqlclient \
+      prometheus_client \
       && \
     apk add --virtual \
       mariadb-client-libs \
