@@ -1,21 +1,28 @@
-FROM phusion/baseimage:0.10.2
+FROM phusion/baseimage:0.11
 CMD ["/sbin/my_init", "--quiet"]
 
-MAINTAINER Kyle Wilcox <kyle@axds.com>
-ENV DEBIAN_FRONTEND noninteractive
-ENV LANG C.UTF-8
+LABEL maintainer="Kyle Wilcox <kyle@axds.com>"
 
-ARG PYTHON_VERSION=3.7
-ENV PYTHON_VERSION ${PYTHON_VERSION}
-ARG LUIGI_VERSION=2.8.9
-ENV LUIGI_VERSION ${LUIGI_VERSION}
-ENV MINICONDA_VERSION latest
-ENV PATH /opt/conda/bin:$PATH
-ENV LUIGI_CONFIG_DIR /etc/luigi/
-ENV LUIGI_CONFIG_PATH /etc/luigi/luigi.conf
-ENV LUIGI_STATE_DIR /luigi/state
+ARG DEBIAN_FRONTEND="noninteractive"
 
-RUN apt-get update && apt-get install -y \
+ARG PYTHON_VERSION="3.7"
+
+ARG CONDA_VERSION="4.7.12.1"
+ARG CONDA_MD5="81c773ff87af5cfac79ab862942ab6b3"
+ARG CONDA_DIR="/opt/conda"
+
+ARG LUIGI_VERSION="2.8.9"
+ARG LUIGI_CONFIG_DIR="/etc/luigi/"
+ARG LUIGI_CONFIG_PATH="/etc/luigi/luigi.conf"
+ARG LUIGI_STATE_DIR="/luigi/state"
+
+ENV PATH="$CONDA_DIR/bin:$PATH"
+ENV LANG="C.UTF-8"
+ENV LUIGI_VERSION="${LUIGI_VERSION}"
+
+RUN echo "**** install binary packages ****" && \
+    install_clean \
+        bash \
         binutils \
         build-essential \
         bzip2 \
@@ -25,35 +32,50 @@ RUN apt-get update && apt-get install -y \
         libxext6 \
         libxrender1 \
         wget \
-        && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-    curl -k -o /miniconda.sh https://repo.continuum.io/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh && \
-    /bin/bash /miniconda.sh -b -p /opt/conda && \
-    rm /miniconda.sh && \
-    /opt/conda/bin/conda config \
+        && \  
+    \
+    echo "**** install miniconda ****" && \
+    mkdir -p "$CONDA_DIR" && \
+    wget "http://repo.continuum.io/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh" -O miniconda.sh && \
+    echo "$CONDA_MD5  miniconda.sh" | md5sum -c && \
+    \
+    bash miniconda.sh -f -b -p "$CONDA_DIR" && \
+    echo "export PATH=$CONDA_DIR/bin:\$PATH" > /etc/profile.d/conda.sh && \
+    \
+    conda update --all --yes && \
+    conda config \
+        --set auto_update_conda False \
         --set always_yes yes \
         --set changeps1 no \
         --set show_channel_urls True \
         && \
-    /opt/conda/bin/conda config \
+    conda config \
         --add channels conda-forge \
         && \
-    /opt/conda/bin/conda install \
+    \
+    echo "**** install python packages ****" && \
+    conda install --yes --freeze-installed \
         python=="${PYTHON_VERSION}*" \
-        luigi==${LUIGI_VERSION} \
+        luigi=="${LUIGI_VERSION}" \
         sqlalchemy \
         psycopg2 \
         mysql-connector-python \
         mysqlclient \
+        prometheus_client \
         && \
-    /opt/conda/bin/conda clean -a -y && \
-    mkdir -p ${LUIGI_CONFIG_DIR} && \
-    mkdir -p ${LUIGI_STATE_DIR}
+    \
+    echo "**** cleanup ****" && \
+    rm -rf /root/.cache /tmp/* /var/tmp/* && \
+    rm -f miniconda.sh && \
+    conda clean --all --force-pkgs-dirs --yes && \
+    find "$CONDA_DIR" -follow -type f \( -iname '*.a' -o -iname '*.pyc' -o -iname '*.js.map' \) -delete && \
+    \
+    echo "**** finalize ****" && \
+    mkdir -p "${LUIGI_CONFIG_DIR}" && \
+    mkdir -p "${LUIGI_STATE_DIR}"
 
-COPY logging.conf ${LUIGI_CONFIG_DIR}
-COPY luigi.conf ${LUIGI_CONFIG_DIR}
+COPY logging.conf "${LUIGI_CONFIG_DIR}"
+COPY luigi.conf "${LUIGI_CONFIG_DIR}"
 VOLUME ["${LUIGI_CONFIG_DIR}", "${LUIGI_STATE_DIR}"]
 
 EXPOSE 8082/TCP
