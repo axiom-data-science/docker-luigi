@@ -18,6 +18,7 @@ ARG LUIGI_STATE_DIR="/luigi/state"
 
 ENV PATH="$CONDA_DIR/bin:$PATH"
 ENV LANG="C.UTF-8"
+ENV LUIGI_VERSION="${LUIGI_VERSION}"
 
 RUN echo "**** install binary packages ****" && \
     install_clean \
@@ -72,7 +73,6 @@ RUN echo "**** install binary packages ****" && \
     echo "**** finalize ****" && \
     mkdir -p "${LUIGI_CONFIG_DIR}" && \
     mkdir -p "${LUIGI_STATE_DIR}"
-    
 
 COPY logging.conf "${LUIGI_CONFIG_DIR}"
 COPY luigi.conf "${LUIGI_CONFIG_DIR}"
