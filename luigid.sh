@@ -8,6 +8,7 @@ cat << "EOF"
 __| |___) )  ) \__/ (    _| |__   \ \__/ /    _| |__
 \________/   \______/   /_____(    \____/    /_____(
 EOF
-echo "Luigi: $LUIGI_VERSION - Python: $(python --version)"
+echo "Luigi: ${LUIGI_VERSION}"
+echo "$(python -VV)"
 
 exec luigid
