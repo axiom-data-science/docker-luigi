@@ -3,7 +3,7 @@ FROM python:$PYTHON_VERSION-alpine3.10
 
 LABEL maintainer="Kyle Wilcox <kyle@axds.com>"
 
-ARG LUIGI_VERSION="2.8.9"
+ARG LUIGI_VERSION="2.8.10"
 ARG LUIGI_CONFIG_DIR="/etc/luigi/"
 ARG LUIGI_CONFIG_PATH="/etc/luigi/luigi.conf"
 ARG LUIGI_STATE_DIR="/luigi/state"
