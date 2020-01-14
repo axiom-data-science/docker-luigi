@@ -3,7 +3,7 @@ version: '3.2'
 services:
 
   maria:
-    image: mariadb:latest
+    image: mariadb/server:latest
     environment:
       MYSQL_USER: luigid
       MYSQL_PASSWORD: luigid
@@ -21,6 +21,11 @@ services:
     build:
       context: ../
       dockerfile: Dockerfile.alpine
+    volumes:
+      - "./sqlite.conf:/etc/luigi/luigi.conf:ro"
+    environment:
+      LUIGI_CONFIG_PARSER: conf
+      LUIGI_CONFIG_PATH: /etc/luigi/luigi.conf
 
   luigi-alpine-maria:
     build:
@@ -28,6 +33,9 @@ services:
       dockerfile: Dockerfile.alpine
     volumes:
       - "./maria.conf:/etc/luigi/luigi.conf:ro"
+    environment:
+      LUIGI_CONFIG_PARSER: conf
+      LUIGI_CONFIG_PATH: /etc/luigi/luigi.conf
     depends_on:
       - maria
 
@@ -37,18 +45,29 @@ services:
       dockerfile: Dockerfile.alpine
     volumes:
       - "./pgsql.conf:/etc/luigi/luigi.conf:ro"
+    environment:
+      LUIGI_CONFIG_PARSER: conf
+      LUIGI_CONFIG_PATH: /etc/luigi/luigi.conf
     depends_on:
       - pgsql
 
   luigi-sqlite:
     build:
       context: ../
+    volumes:
+      - "./sqlite.conf:/etc/luigi/luigi.conf:ro"
+    environment:
+      LUIGI_CONFIG_PARSER: conf
+      LUIGI_CONFIG_PATH: /etc/luigi/luigi.conf
 
   luigi-maria:
     build:
       context: ../
     volumes:
       - "./maria.conf:/etc/luigi/luigi.conf:ro"
+    environment:
+      LUIGI_CONFIG_PARSER: conf
+      LUIGI_CONFIG_PATH: /etc/luigi/luigi.conf
     depends_on:
       - maria
 
@@ -57,5 +76,8 @@ services:
       context: ../
     volumes:
       - "./pgsql.conf:/etc/luigi/luigi.conf:ro"
+    environment:
+      LUIGI_CONFIG_PARSER: conf
+      LUIGI_CONFIG_PATH: /etc/luigi/luigi.conf
     depends_on:
       - pgsql
