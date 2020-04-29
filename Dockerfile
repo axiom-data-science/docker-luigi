@@ -7,11 +7,12 @@ ARG DEBIAN_FRONTEND="noninteractive"
 
 ARG PYTHON_VERSION="3.7"
 
-ARG CONDA_VERSION="4.7.12.1"
-ARG CONDA_MD5="81c773ff87af5cfac79ab862942ab6b3"
+ARG CONDA_VERSION="4.8.2"
+ARG CONDA_PY_VERSION="37"
+ARG CONDA_MD5="87e77f097f6ebb5127c77662dfc3165e"
 ARG CONDA_DIR="/opt/conda"
 
-ARG LUIGI_VERSION="2.8.11"
+ARG LUIGI_VERSION="2.8.13"
 ARG LUIGI_CONFIG_DIR="/etc/luigi/"
 ARG LUIGI_CONFIG_PATH="/etc/luigi/luigi.conf"
 ARG LUIGI_STATE_DIR="/luigi/state"
@@ -32,11 +33,11 @@ RUN echo "**** install binary packages ****" && \
         libxext6 \
         libxrender1 \
         wget \
-        && \  
+        && \
     \
     echo "**** install miniconda ****" && \
     mkdir -p "$CONDA_DIR" && \
-    wget "http://repo.continuum.io/miniconda/Miniconda3-${CONDA_VERSION}-Linux-x86_64.sh" -O miniconda.sh && \
+    wget "https://repo.anaconda.com/miniconda/Miniconda3-py${CONDA_PY_VERSION}_${CONDA_VERSION}-Linux-x86_64.sh" -O miniconda.sh && \
     echo "$CONDA_MD5  miniconda.sh" | md5sum -c && \
     \
     bash miniconda.sh -f -b -p "$CONDA_DIR" && \

@@ -12,14 +12,14 @@ In addition to supporting the `sqlite` task history backend, this container incl
 
 Uses `pip` to install `luigi` and dependencies
 
-* `axiom/docker-luigi:latest-alpine` (2.8.9)
+* `axiom/docker-luigi:latest-alpine` (2.8.13)
 * `axiom/docker-luigi:{version}-alpine`
 
 ### baseimage (ubuntu xenial)
 
 Uses `conda` to install `luigi` and dependencies
 
-* `axiom/docker-luigi:latest` (2.8.9)
+* `axiom/docker-luigi:latest` (2.8.13)
 * `axiom/docker-luigi:{version}`
 
 ## Exposed Volumes
@@ -70,7 +70,7 @@ docker run \
 
 ```bash
 docker-compose -f tests/docker-compose.yml up -d maria pgsql
-# Wait ~10s for databases to start, and in new terminal:
+# Wait ~10s for databases to start
 docker-compose -f tests/docker-compose.yml build
 docker-compose -f tests/docker-compose.yml up
 docker-compose down
