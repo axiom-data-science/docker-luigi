@@ -9,6 +9,7 @@ services:
       MYSQL_PASSWORD: luigid
       MYSQL_DATABASE: luigid
       MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_INITDB_SKIP_TZINFO: "yes"
 
   pgsql:
     image: postgres:latest
